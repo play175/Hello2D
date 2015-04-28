@@ -20,6 +20,7 @@ A (or to be a) 2D game engine or gui library
 
 Unity3D、iOS UIKit、EJoy2D、Flash AS3 Core、nothings/stb、以及互联网极具分享精神的网友
 
+更多信息请查看这篇文章：http://yoyo.play175.com/p/hello2d.html
 
  The MIT License
 
