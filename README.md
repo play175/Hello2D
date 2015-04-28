@@ -4,16 +4,21 @@ Hello2D
 A (or to be a) 2D game engine or gui library
 
 
-�򵥵�2Dͼ����Ⱦ���棨Ŀǰ����CPU��Ⱦ������Ҫ�������ص�
+简单的2D图形渲染引擎（目前采用CPU渲染），主要有以下特点
 
-1����Unity3D�ܵ��������������װ�ΰ���ƣ�ĳ���ڵ��ϣ���Ҫʵ��ʲô���ܾͼ�ʲô�������
-2�������Ż���������ػ����
-3��֧�ֿ�ƽ̨��ֻ��Ҫ���޸���Χ������ش���
-4��֧��lua�������У�
-5����ʱû�뵽������
+1、从Unity3D受到启发，采用组件装饰板设计，某个节点上，需要实现什么功能就加什么功能组件
 
-��л���¸�����������Ŀ��
-Unity3D��iOS UIKit��EJoy2D��Flash AS3 Core��nothings/stb���Լ����������߷������������
+2、采用优化的脏矩形重绘机制
+
+3、支持跨平台，只需要简单修改外围窗口相关代码
+
+4、支持lua（开发中）
+
+5、暂时没想到。。。
+
+感谢以下给我启发的项目：
+
+Unity3D、iOS UIKit、EJoy2D、Flash AS3 Core、nothings/stb、以及互联网极具分享精神的网友
 
 
  The MIT License
