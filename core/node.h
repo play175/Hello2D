@@ -59,8 +59,8 @@ struct node {
 	bool disable;//隐藏
 	vec pos;
 	vec scale;
-	rect bounds;
-	rect tarbounds;
+	rect bounds;//注意：x,y 在0 - 1 范围内
+	rect tarbounds;//注意：x,y 在0 - 1 范围内
 	float rot;
 
 	uint8_t mask;
@@ -200,10 +200,10 @@ static inline void node_updatelocalmat(struct node *this) {
 	//update local matrix
 	//注意:缩放、旋转、平移 顺序不能乱
 	mat_identity(&this->mat);
-	mat_translate(&this->mat,this->bounds.x,this->bounds.y);
-	mat_scale(&this->mat,this->scale.x,this->scale.y);
-	mat_rotate(&this->mat,this->rot);
-	mat_translate(&this->mat,this->pos.x,this->pos.y);
+	mat_translate(&this->mat, -this->bounds.x * this->bounds.w, -this->bounds.y * this->bounds.h);
+	mat_scale(&this->mat, this->scale.x, this->scale.y);
+	mat_rotate(&this->mat, this->rot);
+	mat_translate(&this->mat, this->pos.x, this->pos.y);
 }
 
 static inline void node_updateworldmat(struct node *this) {
@@ -215,14 +215,32 @@ static inline void node_updateworldmat(struct node *this) {
 	}
 }
 
-static inline void node_draw(uint32_t *bits, int pitch, float x, float y, float w, float h) {
+static inline void node_draw(uint32_t *bits, int pitch, float bitsw, float bitsh, float x, float y, float w, float h) {
 	if(_current_drawcontext == NULL || _current_node == NULL)return;
+	if(bitsw <= 0 || bitsh <= 0 || w <= 0 || h <= 0)return;
+
+	mat *m;
+	if (x != 0 || y != 0 || bitsw != w || bitsh != h) {
+		mat mt;
+		mat_identity(&mt);
+		mat_translate(&mt,-_current_node->bounds.x * bitsw + x
+			, -_current_node->bounds.y * bitsh + y);
+		mat_scale(&mt, _current_node->scale.x * w / bitsw, _current_node->scale.y * h / bitsh);
+		mat_rotate(&mt, _current_node->rot);
+		mat_translate(&mt, _current_node->pos.x, _current_node->pos.y);
+		if(_current_node->parent) {
+			mat_mul(&mt, &_current_node->parent->worldmat);
+		}
+		m = &mt;
+	} else {
+		m = &_current_node->worldmat;
+	}
 
 	game_blend(BLEND_NORMAL
-		,_current_drawcontext->dx,_current_drawcontext->dy,_current_drawcontext->bits
-		,_current_drawcontext->pitch,_current_drawcontext->w,_current_drawcontext->h
-		,bits, pitch, w, h
-		,&_current_node->worldmat);
+		, _current_drawcontext->dx, _current_drawcontext->dy, _current_drawcontext->bits
+		, _current_drawcontext->pitch, _current_drawcontext->w, _current_drawcontext->h
+		, bits, pitch, bitsw, bitsh
+		, m);
 }
 
 #endif

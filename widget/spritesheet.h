@@ -14,11 +14,6 @@
 #ifndef _SPRITESHEET_H
 #define _SPRITESHEET_H
 
-struct frame {
-	vec orign;
-	rect rect;
-};
-
 struct sheet_anim {
 	bool loop;
 	kvec_t(uint16_t) frameidxs;//Ö¡ÐòºÅÊý×é

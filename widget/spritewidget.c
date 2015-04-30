@@ -31,14 +31,14 @@ void widget_sprite_draw() {
 		int sh = (int)rect->h;
 		if (sw + (int)rect->x > wgspr->tex->w) sw -= (int)rect->x - wgspr->tex->w;
 		if (sh + (int)rect->y > wgspr->tex->w) sh -= (int)rect->y - wgspr->tex->h;
-		if(sw > this->bounds.w) sw = this->bounds.w;
-		if(sh > this->bounds.h) sw = this->bounds.h;
 
 		node_draw((uint32_t *)wgspr->tex->data + (wgspr->tex->w * (int)rect->y + (int)rect->x)
 			, wgspr->tex->w
-			, 0, 0
 			, sw
-			, sh);
+			, sh
+			, 0, 0
+			, this->bounds.w
+			, this->bounds.h);
 	}
 }
 

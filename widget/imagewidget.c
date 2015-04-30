@@ -34,9 +34,11 @@ void widget_image_draw() {
 	
 	if(wgimg->tex != NULL) {
 		node_draw((uint32_t *)wgimg->tex->data , wgimg->tex->w
+			, wgimg->tex->w
+			, wgimg->tex->h
 			, 0, 0
-			, this->bounds.w <= wgimg->tex->w ? this->bounds.w : wgimg->tex->w
-			, this->bounds.h <= wgimg->tex->h ? this->bounds.h : wgimg->tex->h);
+			, this->bounds.w
+			, this->bounds.h);
 	}
 }
 

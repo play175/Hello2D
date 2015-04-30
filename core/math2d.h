@@ -26,6 +26,15 @@ struct rect {
 	float x,y,w,h;
 };
 
+struct edge {
+	float left,top,right,bottom;
+};
+
+struct frame {
+	struct vec orign;
+	struct rect rect;
+};
+
 /*******
 *|a b tx|
 *|c d ty|

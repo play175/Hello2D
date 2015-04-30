@@ -56,8 +56,8 @@ void widget_test_update() {
 	struct node *this = _current_node;
 
 	if (this->id==2 || this->id==3) {
-		//修改零点为图片中心点(零点默认在左上角)
-		node_pivot(this, 0 - this->bounds.w /2, 0 - this->bounds.h /2);
+		//修改零点为中心点(零点默认在左上角)
+		node_pivot(this, 0.5f, 0.5f);
 	}
 
 	if (this->id % 4 == 0 || this->id % 6 == 0) {
