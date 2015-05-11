@@ -374,8 +374,23 @@ static HWND create_window(int w, int h,uint32_t style,uint32_t exstyle) {
 	return hwnd;
 }
 
+void set_exe_workdir() {
+	char exedir[512];
+	GetModuleFileName(NULL,exedir,512);
+	int len = strlen(exedir);
+	while(len-->0) {
+		if(len>0 && exedir[len-1] == '\\') {
+			exedir[len-1] = '\0';
+			break;
+		}
+	}
+	SetCurrentDirectory(exedir);
+}
+
 int main(int argc, char **argv) {
 	HWND hwnd;
+
+	set_exe_workdir();
 
 	game_init();
 
