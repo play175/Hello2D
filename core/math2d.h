@@ -49,6 +49,30 @@ typedef struct vec vec;
 typedef struct mat mat;
 typedef struct rect rect;
 
+//edge
+
+static inline void edge_empty(struct edge *this) {
+	this->left = 0;
+	this->top = 0;
+	this->right = 0;
+	this->bottom = 0;
+}
+
+static inline void edge_offset(struct edge *this,float offset) {
+	this->left += offset;
+	this->top += offset;
+	this->right += offset;
+	this->bottom += offset;
+	if(this->left < 0)this->left = 0;
+	if(this->top < 0)this->top = 0;
+	if(this->right < 0)this->right = 0;
+	if(this->bottom < 0)this->bottom = 0;
+}
+
+static inline void edge_print(struct edge *this) {
+	printf("edge{left=%f,top=%f,right=%f,bottom=%f}\n",this->left,this->top,this->right,this->bottom);
+}
+
 //vec
 
 static inline struct vec vec_zero() {

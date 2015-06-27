@@ -16,6 +16,8 @@ static struct node *_root = NULL;
 static struct texture *_tex = NULL;
 static struct spritesheet *_sheet = NULL;
 
+static struct drawable *_src = NULL;
+
 struct widget_test {
 	struct widget super;
 };
@@ -23,7 +25,7 @@ struct widget_test {
 void widget_test_start() {
 	struct node *this = _current_node;
 
-	if (this->id == 2 || this->id == 3) {
+	if (this->id == 2 || this->id == 3) {return;
 		//增加一个image组件
 		struct widget_image *wgimg = imagewidget_addto(this);
 		if (this->id == 2) {
@@ -33,7 +35,12 @@ void widget_test_start() {
 			wgimg->tex = texture_from("res/attack.png");
 			wgimg->reset = true;
 		}
-	} else {
+	} else if (this->id == 4) {
+		struct widget_drawable *wg = drawablewidget_addto(this);
+		wg->src = drawable_from("res/window.9.png");
+		wg->reset = true;
+		node_scalexy(this,1.5f);
+	}else{return;
 		struct widget_sprite *wgspr = spritewidget_addto(this);
 		
 		if(_tex == NULL) {
@@ -67,6 +74,8 @@ void widget_test_update() {
 		if(x < -20)x = G->w;
 		if(x > G->w)x = 0;
 		node_x(this,x);
+
+		//node_rot(this, -60.0f * G->delta);
 	}
 
 	if (this->id % 5 == 0 || this->id % 7 == 0) {
@@ -119,9 +128,9 @@ bool game_create(int argc, char **argv) {
 	_root = node_new();
 
 	int ii=0;
-	for (ii=0;ii<3;++ii) {
+	for (ii=0;ii<5;++ii) {
 		struct node *node1 = node_new();
-		node_pos(node1,rand() % 320,rand() % 400);
+		node_pos(node1,rand() % 320,rand() % 100);
 		node_addchild(_root,node1);
 
 		//测试，增删改节点
@@ -143,8 +152,8 @@ bool game_create(int argc, char **argv) {
 		printf("id:%d\n",i->id);
 	}*/
 
-	//G->w = 640;
-	G->h = 480;
+	G->w = 240;
+	G->h = 280;
 	//G->noborder = true;
 	//G->alpha = true;
 	//G->bgcolor = 0xff668899;

@@ -19,6 +19,7 @@ enum wgtag {
 	WGTAG_MIN = 0,
 	WGTAG_IMAGE,
 	WGTAG_SPRITE,
+	WGTAG_DRAWABLE,
 	WGTAG_TEST,
 	WGTAG_MAX
 };
@@ -28,10 +29,12 @@ enum wgtag {
 #include "spritewidget.h"
 #include "texture.h"
 #include "spritesheet.h"
+#include "drawablewidget.h"
 
 static inline void widget_installall() {
 	imagewidget_install();//image组件初始化
 	spritewidget_install();//sprite组件初始化
+	drawablewidget_install();//drawable组件初始化
 }
 
 #endif
