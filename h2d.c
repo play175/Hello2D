@@ -25,7 +25,7 @@ struct widget_test {
 void widget_test_start() {
 	struct node *this = _current_node;
 
-	if (this->id == 2 || this->id == 3) {return;
+	if (this->id == 2 || this->id == 3) {
 		//增加一个image组件
 		struct widget_image *wgimg = imagewidget_addto(this);
 		if (this->id == 2) {
@@ -35,12 +35,12 @@ void widget_test_start() {
 			wgimg->tex = texture_from("res/attack.png");
 			wgimg->reset = true;
 		}
-	} else if (this->id == 4) {
+	}/* else if (this->id == 4) {
 		struct widget_drawable *wg = drawablewidget_addto(this);
 		wg->src = drawable_from("res/window.9.png");
 		wg->reset = true;
 		node_scalexy(this,1.5f);
-	}else{return;
+	}*/else{
 		struct widget_sprite *wgspr = spritewidget_addto(this);
 		
 		if(_tex == NULL) {
