@@ -19,7 +19,7 @@ static inline void memset32(void *dest, uint32_t data, int count) {
 #ifdef __MINGW32__
 	asm volatile(
 	    "cld;"
-	    "rep stosl;"//stosl指令为从eax保存四字节到edi
+	    "rep stosl;"//stosl鎸囦护涓轰粠eax淇濆瓨鍥涘瓧鑺傚埌edi
     :
     :"D"(dest),"c"(count),"a"(data)
 	);

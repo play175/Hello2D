@@ -16,7 +16,7 @@
 #define min(a,b) ( ((a)>(b)) ? (b):(a) )
 
 
-//Èç¹ûÖ»ÓĞÎ»ÒÆ£¬Ã»ÓĞËõ·ÅºÍĞı×ª£¬Ôòµ÷ÓÃMMXÖ¸ÁîÓÅ»¯
+//å¦‚æœåªæœ‰ä½ç§»ï¼Œæ²¡æœ‰ç¼©æ”¾å’Œæ—‹è½¬ï¼Œåˆ™è°ƒç”¨MMXæŒ‡ä»¤ä¼˜åŒ–
 #define TRANSFORM_MMX(BLEND_FUNCTION) \
 	int x1,y1,x2,y2; \
 	int x,y; \
@@ -98,64 +98,64 @@
 void alphablend32(uint32_t *dest_bmp, int dest_pitch, uint32_t *src_bmp, int src_pitch, int blend_width, int blend_height)
 {
 #ifdef __MINGW32__
-        int nextLineOffset_src = (src_pitch - blend_width) * 4;	// »ìºÏÍêÒ»ĞĞÏñËØºó£¬Í¨¹ı¼ÓÉÏ¸ÃÖµ£¬±ã¿ÉÖ±½Ó¶¨Î»µ½ÏÂĞĞÆğÊ¼ÏñËØ
+        int nextLineOffset_src = (src_pitch - blend_width) * 4;	// æ··åˆå®Œä¸€è¡Œåƒç´ åï¼Œé€šè¿‡åŠ ä¸Šè¯¥å€¼ï¼Œä¾¿å¯ç›´æ¥å®šä½åˆ°ä¸‹è¡Œèµ·å§‹åƒç´ 
         int nextLineOffset_dst = (dest_pitch - blend_width) * 4;
 
         asm volatile(
-                "xorl %%edx, %%edx;"//ÒÑ»ìºÏµÄ¸ß¶È
-                "movl %2, %%ecx;"//Òª»ìºÏµÄ¿í¶È
+                "xorl %%edx, %%edx;"//å·²æ··åˆçš„é«˜åº¦
+                "movl %2, %%ecx;"//è¦æ··åˆçš„å®½åº¦
 
                 "BLEND_BEGIN:;"
-                "cmpl $0x00FFFFFF, (%%esi);"//; Èç¹ûalphaÎª0,ÔòÌø¹ı»ìºÏ²¿·Ö
-                "jna BLEND_END;"//Ğ¡ÓÚµÈÓÚ
+                "cmpl $0x00FFFFFF, (%%esi);"//; å¦‚æœalphaä¸º0,åˆ™è·³è¿‡æ··åˆéƒ¨åˆ†
+                "jna BLEND_END;"//å°äºç­‰äº
 
-                "movd (%%edi), %%mm0;"//		; °ÑÄ¿µÄÏñËØÖµÒÆÈëmm0¼Ä´æÆ÷µÄµÍ32Î»
-                "movd (%%esi), %%mm1;"//; °ÑÔ´ÏñËØÖµÒÆÈëmm1¼Ä´æÆ÷µÄµÍ32Î»
+                "movd (%%edi), %%mm0;"//		; æŠŠç›®çš„åƒç´ å€¼ç§»å…¥mm0å¯„å­˜å™¨çš„ä½32ä½
+                "movd (%%esi), %%mm1;"//; æŠŠæºåƒç´ å€¼ç§»å…¥mm1å¯„å­˜å™¨çš„ä½32ä½
 
                 //Core Begin
-                "pxor %%mm2, %%mm2;" //; °ÑMM2Çå0
-                "punpcklbw %%mm2, %%mm0;"  //			; src:8 bitµ½16 bitÒÔÈİÄÉ½á¹û£¬32bit expand to 64 bit
-                "punpcklbw %%mm2, %%mm1;"  //			; dst:8 bitµ½16 bitÒÔÈİÄÉ½á¹û.32bit expand to 64 bit
-                "movq %%mm1, %%mm3;"  //			; ÒòÎªÒªÓÃdstµÄAlphaÖµ
-                "punpckhwd	 %%mm3, %%mm3;"  //			; ¸ß×ÖÒÆ¶¯µ½Ë«×Ö
-                "punpckhdq	%%mm3, %%mm3;"  //			; Ë«×ÖÒÆ¶¯µ½ËÄ×Ö£¬ÏÖÔÚÓĞ°Ë¸öÏñËØµÄAlphaÁË!
+                "pxor %%mm2, %%mm2;" //; æŠŠMM2æ¸…0
+                "punpcklbw %%mm2, %%mm0;"  //			; src:8 bitåˆ°16 bitä»¥å®¹çº³ç»“æœï¼Œ32bit expand to 64 bit
+                "punpcklbw %%mm2, %%mm1;"  //			; dst:8 bitåˆ°16 bitä»¥å®¹çº³ç»“æœ.32bit expand to 64 bit
+                "movq %%mm1, %%mm3;"  //			; å› ä¸ºè¦ç”¨dstçš„Alphaå€¼
+                "punpckhwd	 %%mm3, %%mm3;"  //			; é«˜å­—ç§»åŠ¨åˆ°åŒå­—
+                "punpckhdq	%%mm3, %%mm3;"  //			; åŒå­—ç§»åŠ¨åˆ°å››å­—ï¼Œç°åœ¨æœ‰å…«ä¸ªåƒç´ çš„Alphaäº†!
                 "movq %%mm0, %%mm4;"  //			; mm4 = dst
                 "movq %%mm1, %% mm5;"  //			; mm5 = src
-                "psubusw %%mm1, %%mm4;"  //			; dst-src£¬±¥ºÍ¼õ£¬Ğ¡ÓÚ0Îª0
-                "psubusw %%mm0, %%mm5;"  //			; src-dst£¬±¥ºÍ¼õ£¬Ğ¡ÓÚ0Îª0
+                "psubusw %%mm1, %%mm4;"  //			; dst-srcï¼Œé¥±å’Œå‡ï¼Œå°äº0ä¸º0
+                "psubusw %%mm0, %%mm5;"  //			; src-dstï¼Œé¥±å’Œå‡ï¼Œå°äº0ä¸º0
                 "pmullw %%mm3, %% mm4;"  //			; Alpha * (src-dst)
                 "pmullw	 %%mm3, %%mm5;"  //			; Alpha * (dst-src)
-                "psrlw $8, %%mm4;"  //				; ³ıÒÔ256£¬now mm4 get the result£¬(src-dst)<0 ²¿·Ö
-                "psrlw $8, %%mm5;"  //				; ³ıÒÔ256£¬now mm5 get the result£¬(dst-src)>0 ²¿·Ö
-                "paddusw %%mm5, %%mm0;"  //			; ±¥ºÍ¼Óµ½Ô­Í¼Ïó:D=Alpha*(O-S)+S£¬(src-dst)<0 ²¿·Ö
-                "psubusw %%mm4, %% mm0;"  //			; ±¥ºÍ¼Óµ½Ô­Í¼ÏóD=S-Alpha*(S-O)£¬(dst-src)>0 ²¿·Ö
-                "packuswb %%mm0, %%mm0;"  //			; ½ôËõµ½µÍ32bit
+                "psrlw $8, %%mm4;"  //				; é™¤ä»¥256ï¼Œnow mm4 get the resultï¼Œ(src-dst)<0 éƒ¨åˆ†
+                "psrlw $8, %%mm5;"  //				; é™¤ä»¥256ï¼Œnow mm5 get the resultï¼Œ(dst-src)>0 éƒ¨åˆ†
+                "paddusw %%mm5, %%mm0;"  //			; é¥±å’ŒåŠ åˆ°åŸå›¾è±¡:D=Alpha*(O-S)+Sï¼Œ(src-dst)<0 éƒ¨åˆ†
+                "psubusw %%mm4, %% mm0;"  //			; é¥±å’ŒåŠ åˆ°åŸå›¾è±¡D=S-Alpha*(S-O)ï¼Œ(dst-src)>0 éƒ¨åˆ†
+                "packuswb %%mm0, %%mm0;"  //			; ç´§ç¼©åˆ°ä½32bit
                 //Core End
 
-                "movd %%mm0, (%%edi) ;"  //			; »ìºÏ½á¹ûĞ´½øÄ¿µÄÏñËØ
+                "movd %%mm0, (%%edi) ;"  //			; æ··åˆç»“æœå†™è¿›ç›®çš„åƒç´ 
 
                 "BLEND_END:;"
                 "addl $4, %%edi;"
                 "addl $4, %%esi;"
-                "loop BLEND_BEGIN;"//; Ñ­»·
+                "loop BLEND_BEGIN;"//; å¾ªç¯
 
-                "addl %4, %%esi;"//; ¼ÓÉÏÆ«ÒÆÁ¿£¬Ê¹¶¨Î»µ½ÏÂĞĞÆğÊ¼´¦
+                "addl %4, %%esi;"//; åŠ ä¸Šåç§»é‡ï¼Œä½¿å®šä½åˆ°ä¸‹è¡Œèµ·å§‹å¤„
                 "addl %5, %%edi;"
 
                 "incl %%edx;"
                 "movl %2, %%ecx;"
 
-                "cmpl %3, %%edx;"//ÈôedxĞ¡ÓÚblend_height,Ôò×ªÒÆµ½ÉÏÃæ¼ÌĞø»ìºÏ
+                "cmpl %3, %%edx;"//è‹¥edxå°äºblend_height,åˆ™è½¬ç§»åˆ°ä¸Šé¢ç»§ç»­æ··åˆ
                 "jb BLEND_BEGIN;"
 
-                "EMMS;" //ÒòÎª´Ómm0µ½mm7,ÕâĞ©¼Ä´æÆ÷ÊÇ¡°½èÓÃ¡±¸¡µã¼Ä´æÆ÷µÄµÍ64Î»,ËùÒÔÃ¿´ÎÔÚÓÃÍêMMXÖ¸ÁîºóÒ»¶¨ÒªÓÃEMMSÖ¸Áî½«¼Ä´æÆ÷Çå¿Õ
+                "EMMS;" //å› ä¸ºä»mm0åˆ°mm7,è¿™äº›å¯„å­˜å™¨æ˜¯â€œå€Ÿç”¨â€æµ®ç‚¹å¯„å­˜å™¨çš„ä½64ä½,æ‰€ä»¥æ¯æ¬¡åœ¨ç”¨å®ŒMMXæŒ‡ä»¤åä¸€å®šè¦ç”¨EMMSæŒ‡ä»¤å°†å¯„å­˜å™¨æ¸…ç©º
 
         :
         :"S"(src_bmp), "D"(dest_bmp), "m"(blend_width), "m"(blend_height), "m"(nextLineOffset_src), "m"(nextLineOffset_dst)
         );
 #else
 
-        // CÊµÏÖ
+        // Cå®ç°
         int nextLineOffset_src = (src_pitch - blend_width);
         int nextLineOffset_dst = (dest_pitch - blend_width);
         int h,w;
@@ -174,7 +174,7 @@ void alphablend32(uint32_t *dest_bmp, int dest_pitch, uint32_t *src_bmp, int src
                                 b2 = (*dest_bmp) & 0x000000ff;
                                 g2 = ((*dest_bmp) & 0x0000ff00)>>8;
                                 r2 = ((*dest_bmp) & 0x00ff0000)>>16;
-                                //>>8ÊÇ½üËÆÖµ£¬Êµ¼ÊÓ¦¸ÃÊÇ³ıÒÔ255
+                                //>>8æ˜¯è¿‘ä¼¼å€¼ï¼Œå®é™…åº”è¯¥æ˜¯é™¤ä»¥255
                                 *dest_bmp = ((a1 * (r1 - r2) >> 8) + r2) << 16 | ((a1 * (g1 - g2) >> 8) + g2) << 8 | ((a1 * (b1 - b2) >> 8) + b2) << 0 ;
                         }
 

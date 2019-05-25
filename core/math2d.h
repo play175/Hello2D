@@ -142,7 +142,7 @@ static inline void vec_add(struct vec *this,struct vec *p,struct vec *out) {
 	vec_set(out,x,y);
 }
 
-//Ëõ·Åµ½Ö¸¶¨³¤¶È
+//ç¼©æ”¾åˆ°æŒ‡å®šé•¿åº¦
 static inline void vec_normalize(struct vec *this,float thickness) {
 	float invD = vec_length(this);
 	if (invD > 0) {
@@ -187,7 +187,7 @@ static inline void rect_union(struct rect *this,struct rect *to_union,struct rec
 		*out = *this;
 		return;
 	}
-	//²»ÄÜÖ±½Ó²Ù×÷out£¬ÒòÎª¿ÉÄÜout==this
+	//ä¸èƒ½ç›´æ¥æ“ä½œoutï¼Œå› ä¸ºå¯èƒ½out==this
 	struct rect rt;
 	rt.x = this->x < to_union->x ? this->x : to_union->x;
 	rt.y = this->y < to_union->y ? this->y : to_union->y;
@@ -244,13 +244,13 @@ static inline void mat_mul(struct mat *this,struct mat *mat) {
 	this->ty = result_ty;
 }
 
-//ÊÀ½ç×ø±êÎ»ÒÆ
+//ä¸–ç•Œåæ ‡ä½ç§»
 static inline void mat_translate(struct mat *this,float dx,float dy) {
 	this->tx += dx;
 	this->ty += dy;
 }
 
-//²»¿¼ÂÇÎ»ÒÆµÄ±ä»»
+//ä¸è€ƒè™‘ä½ç§»çš„å˜æ¢
 static inline void mat_delta_transform(struct mat *this,float x,float y,float *out_x,float *out_y) {
 	*out_x = (this->a * x) + (this->c * y);
 	*out_y = (this->d * y) + (this->b * x);
@@ -321,7 +321,7 @@ static inline void mat_setrotate(struct mat *this,float angle) {
 	mat_set(this,a, b, -(b), a, 0, 0);
 }
 
-//ÉèÖÃ°´½Ç¶ÈangleÑØÔ­µãĞı×ª,angleÊÇ½Ç¶È²»ÊÇ»¡¶È
+//è®¾ç½®æŒ‰è§’åº¦angleæ²¿åŸç‚¹æ—‹è½¬,angleæ˜¯è§’åº¦ä¸æ˜¯å¼§åº¦
 static inline void mat_rotate(struct mat *this,float angle) {
 	angle = angle * M_PI / 180.0f;
 	float a = cos(angle);
@@ -331,14 +331,14 @@ static inline void mat_rotate(struct mat *this,float angle) {
 	mat_mul(this,&m);
 }
 
-//ÉèÖÃ°´½Ç¶ÈangleÑØÖĞĞÄµãcenter_x, center_yĞı×ª
+//è®¾ç½®æŒ‰è§’åº¦angleæ²¿ä¸­å¿ƒç‚¹center_x, center_yæ—‹è½¬
 static inline void mat_rotate_at(struct mat *this,float angle,float center_x,float center_y) {
 	mat_translate(this,center_x, center_y);
 	mat_rotate(this,angle);
 	mat_translate(this,-center_x, -center_y);
 }
 
-//ÉèÖÃĞ±ÇĞ£¬×¢Òâ²»Òª½«shear_x, shear_yÍ¬Ê±ÉèÖÃÎª1
+//è®¾ç½®æ–œåˆ‡ï¼Œæ³¨æ„ä¸è¦å°†shear_x, shear_yåŒæ—¶è®¾ç½®ä¸º1
 static inline void mat_shear(struct mat *this,float shear_x, float shear_y) {
 	struct mat m;
 	mat_identity(&m);
@@ -355,7 +355,7 @@ static inline void mat_scale(struct mat *this,float sx,float sy) {
 	mat_mul(this,&m);
 }
 
-//±¾µØÎ»ÒÆ
+//æœ¬åœ°ä½ç§»
 static inline void mat_offset(struct mat *this,float dx,float dy) {
 	mat_invert(this);
 	mat_translate(this,-dx,-dy);
@@ -392,7 +392,7 @@ static inline void mat_transform_rect(struct mat *this,int w, int h, struct rect
 	rect->h = bottom - top;
 }
 
-// °´¸ø¶¨µÄ´óĞ¡¼ÆËã²¢·µ»ØÊµÊ©±ä»»ºóµÄ³ß´ç
+// æŒ‰ç»™å®šçš„å¤§å°è®¡ç®—å¹¶è¿”å›å®æ–½å˜æ¢åçš„å°ºå¯¸
 static inline void mat_transform_size(struct mat *this,int w, int h, int *x1, int *y1, int *x2, int *y2) {
 	float fx,fy;
 	float left,top,right,bottom;

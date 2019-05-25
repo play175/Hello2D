@@ -88,15 +88,15 @@ static void window_render(HWND hwnd) {
 		HDC screenhdc = GetDC(NULL);
 
 		UpdateLayeredWindow(
-		    hwnd//HWND hwnd,             // layered´°¿Ú¾ä±ú£¬´°¿Ú±ØĞëÓĞWS_EX_LAYEREDÑùÊ½
-		    ,screenhdc//HDC hdcDst,            // ÆÁÄ»DC,¿ÉÒÔÍ¨¹ıGetDC(NULL)È¡µÃ
-		    ,&ptWinPos//POINT *pptDst,         // layered´°¿ÚÒªÒÆ¶¯µ½µÄÎ»ÖÃ
-		    ,&sizeWindow//SIZE *psize,           // ÉèÖÃlayered´°¿ÚµÄ´óĞ¡
-		    ,_mem_hdc//HDC hdcSrc,            // Ô´DC,ÀàËÆBitBltµÄÔ´DC
-		    ,&ptSrc//POINT *pptSrc,         // Òª»­µ½layered´°¿ÚÉÏµÄÔ´DCÉÏµÄÆğµã
-		    ,0//COLORREF crKey,        // Òª×÷ÎªÍ¸Ã÷µÄÑÕÉ«£¬Õâ¸ö²ÎÊıÕë¶ÔÎ»Í¼ºÜÓĞĞ§
-		    ,&blendFunc//BLENDFUNCTION *pblend, // »ìºÏÄ£Ê½£¬Ö¸¶¨alphaFormatÎªAC_SRC_ALPHA£¬¾ÍÊ¹ÓÃalpha»ìºÏ·½Ê½¡£
-		    ,ULW_ALPHA//DWORD dwFlags          // ±êÖ¾Ê¹ÓÃÄÄÖÖ»ìºÏÄ£Ê½£¬¿ÉÒÔÊÇULW_ALPHA ±íÊ¾Ê¹ÓÃalpha»ìºÏ£¬ULW_OPAQUE±íÊ¾²»Ê¹ÓÃalpha»ìºÏ£¬ULW_COLORKEY±íÊ¾Ö¸¶¨µÄÑÕÉ«ÎªÍ¸Ã÷É«¡£
+		    hwnd//HWND hwnd,             // layeredçª—å£å¥æŸ„ï¼Œçª—å£å¿…é¡»æœ‰WS_EX_LAYEREDæ ·å¼
+		    ,screenhdc//HDC hdcDst,            // å±å¹•DC,å¯ä»¥é€šè¿‡GetDC(NULL)å–å¾—
+		    ,&ptWinPos//POINT *pptDst,         // layeredçª—å£è¦ç§»åŠ¨åˆ°çš„ä½ç½®
+		    ,&sizeWindow//SIZE *psize,           // è®¾ç½®layeredçª—å£çš„å¤§å°
+		    ,_mem_hdc//HDC hdcSrc,            // æºDC,ç±»ä¼¼BitBltçš„æºDC
+		    ,&ptSrc//POINT *pptSrc,         // è¦ç”»åˆ°layeredçª—å£ä¸Šçš„æºDCä¸Šçš„èµ·ç‚¹
+		    ,0//COLORREF crKey,        // è¦ä½œä¸ºé€æ˜çš„é¢œè‰²ï¼Œè¿™ä¸ªå‚æ•°é’ˆå¯¹ä½å›¾å¾ˆæœ‰æ•ˆ
+		    ,&blendFunc//BLENDFUNCTION *pblend, // æ··åˆæ¨¡å¼ï¼ŒæŒ‡å®šalphaFormatä¸ºAC_SRC_ALPHAï¼Œå°±ä½¿ç”¨alphaæ··åˆæ–¹å¼ã€‚
+		    ,ULW_ALPHA//DWORD dwFlags          // æ ‡å¿—ä½¿ç”¨å“ªç§æ··åˆæ¨¡å¼ï¼Œå¯ä»¥æ˜¯ULW_ALPHA è¡¨ç¤ºä½¿ç”¨alphaæ··åˆï¼ŒULW_OPAQUEè¡¨ç¤ºä¸ä½¿ç”¨alphaæ··åˆï¼ŒULW_COLORKEYè¡¨ç¤ºæŒ‡å®šçš„é¢œè‰²ä¸ºé€æ˜è‰²ã€‚
 		);
 
 		ReleaseDC(NULL,screenhdc);
@@ -121,7 +121,7 @@ bool is_windowminimize() {
 		return false;
 }
 
-//ÒÆ¶¯´°¿Ú
+//ç§»åŠ¨çª—å£
 void begin_movewindow() {
 	UpdateWindow(_hwnd);
 	ReleaseCapture();
@@ -148,12 +148,12 @@ bool send_dropfile(HWND hwnd,char *file) {
 	if (processid == 0)return false;
 	HANDLE hprocess = OpenProcess(PROCESS_VM_OPERATION | PROCESS_VM_WRITE, FALSE, processid);
 	if (hprocess == NULL)return false;
-	void *addr = VirtualAllocEx(hprocess, NULL, sz, MEM_COMMIT, PAGE_READWRITE); //×¢ÒâÊµ¼Ê·ÖÅäµÄÄÚ´æ´óĞ¡ÊÇÒ³ÄÚ´æ´óĞ¡µÄÕûÊı±¶
+	void *addr = VirtualAllocEx(hprocess, NULL, sz, MEM_COMMIT, PAGE_READWRITE); //æ³¨æ„å®é™…åˆ†é…çš„å†…å­˜å¤§å°æ˜¯é¡µå†…å­˜å¤§å°çš„æ•´æ•°å€
 	if (addr == NULL) {
 		CloseHandle(hprocess);
 		return false;
 	}
-	//void *buf = malloc(sz);//²»ÄÜÓÃÕ»ÉÏÄÚ´æ£¬Ô­Òò²»Ã÷
+	//void *buf = malloc(sz);//ä¸èƒ½ç”¨æ ˆä¸Šå†…å­˜ï¼ŒåŸå› ä¸æ˜
 	//DROPFILES *dp = (DROPFILES *)buf;
 	//dp->pFiles = sizeof(*dp);
 	//memcpy(dp + dp->pFiles,file,strlen(file) + 1);
@@ -196,7 +196,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) 
 			++G->frame;
 			game_frame();
 			window_render(hwnd);
-			ValidateRect(hwnd, NULL);//Ê¹´°¿ÚÓĞĞ§   Çå³ıÏûÏ¢¶ÓÁĞÖĞµÄWM_PAINTÏûÏ¢
+			ValidateRect(hwnd, NULL);//ä½¿çª—å£æœ‰æ•ˆ   æ¸…é™¤æ¶ˆæ¯é˜Ÿåˆ—ä¸­çš„WM_PAINTæ¶ˆæ¯
 		}
 		return 0;
 	}
@@ -205,10 +205,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		G->delta = 1.0f * (G->now - last_frame) / 1000.0f;
 		game_update();
 		last_frame = G->now;
-		InvalidateRect(hwnd, NULL , FALSE);//Ê¹´°¿ÚÎŞĞ§   ²úÉúÏûÏ¢WM_PAINT
+		InvalidateRect(hwnd, NULL , FALSE);//ä½¿çª—å£æ— æ•ˆ   äº§ç”Ÿæ¶ˆæ¯WM_PAINT
 		break;
 	}
-	case WM_MOUSEWHEEL://wParam¸ß4Î»±êÊ¶delta£¬µÍ4Î»±êÄÄĞ©Ê¶¿ØÖÆ¼ü°´ÏÂ;lParam±êÊ¶:y|x
+	case WM_MOUSEWHEEL://wParamé«˜4ä½æ ‡è¯†deltaï¼Œä½4ä½æ ‡å“ªäº›è¯†æ§åˆ¶é”®æŒ‰ä¸‹;lParamæ ‡è¯†:y|x
 		p.x = (short)(lParam & 0xffff);
 		p.y = (short)((lParam >> 16) & 0xffff);
 		ScreenToClient(hwnd,&p);
@@ -271,8 +271,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		PostQuitMessage(0);
 		return 0;
 	case WM_QUERYENDSESSION:
-		//¹Ø»ú»òÕß×¢Ïú
-		printf("¹Ø»úing\n");
+		//å…³æœºæˆ–è€…æ³¨é”€
+		printf("å…³æœºing\n");
 		PostQuitMessage(0);
 		break;
 	case WM_LBUTTONUP: {
@@ -399,13 +399,13 @@ int main(int argc, char **argv) {
 	}
 
 	if (G->singleton) {
-		//ÅĞ¶ÏÊÇ·ñÒÑ¾­ÔÚÔËĞĞ
+		//åˆ¤æ–­æ˜¯å¦å·²ç»åœ¨è¿è¡Œ
 		hwnd = FindWindowW(CLASSNAME,NULL);
 		if (hwnd != NULL) {
-			//Èç¹ûÒÑ¾­ÔËĞĞ£¬Ôò¼¤»î
+			//å¦‚æœå·²ç»è¿è¡Œï¼Œåˆ™æ¿€æ´»
 			if (IsIconic(hwnd))ShowWindow(hwnd,SW_RESTORE);
 			SetForegroundWindow(hwnd);
-			//²¢ÇÒ°ÑÍÏÀ´µÄÎÄ¼ş´«¹ıÈ¥
+			//å¹¶ä¸”æŠŠæ‹–æ¥çš„æ–‡ä»¶ä¼ è¿‡å»
 			if (argc>1)send_dropfile(hwnd,argv[1]);
 			goto destroy;
 		}
@@ -427,7 +427,7 @@ int main(int argc, char **argv) {
 	ShowWindow(hwnd, SW_SHOWDEFAULT);
 	UpdateWindow(hwnd);
 
-	//ÉèÖÃ´°¿Ú¿ÉÒÔ½ÓÊÜÎÄ¼şÍÏ×§
+	//è®¾ç½®çª—å£å¯ä»¥æ¥å—æ–‡ä»¶æ‹–æ‹½
 	DragAcceptFiles(hwnd,TRUE);
 
 	MSG msg;

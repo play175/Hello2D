@@ -95,7 +95,7 @@ struct rect *spritesheet_get_rect(struct spritesheet *this) {
 	return & kv_A(this->frames,this->frame);
 }
 
-//frames »á¸´ÖÆ£¬´Ë´¦²»»á±£ÁôÖ¸Õë
+//frames ä¼šå¤åˆ¶ï¼Œæ­¤å¤„ä¸ä¼šä¿ç•™æŒ‡é’ˆ
 void spritesheet_set_frames(struct spritesheet *this,struct rect *frames,int n) {
 	kv_resize(struct rect,this->frames,n);
 	kv_size(this->frames) = n;
@@ -105,7 +105,7 @@ void spritesheet_set_frames(struct spritesheet *this,struct rect *frames,int n) 
 	}
 }
 
-//´Ósprite sheet Éú³ÉÎÆÀí¼¯
+//ä»sprite sheet ç”Ÿæˆçº¹ç†é›†
 void spritesheet_set_frames_from_sheet(struct spritesheet *this,float tex_w,float tex_h,int col,int row,int n) {
 	if (n > col * row)n = col * row;
 	kv_resize(struct rect,this->frames,n);
@@ -171,7 +171,7 @@ void spritesheet_add_ani_batch(struct spritesheet *this,int id,uint16_t start,ui
 	}
 }
 
-//id²»ÄÜ==0£¬framindexs »á¸´ÖÆ£¬´Ë´¦²»»á±£ÁôÖ¸Õë
+//idä¸èƒ½==0ï¼Œframindexs ä¼šå¤åˆ¶ï¼Œæ­¤å¤„ä¸ä¼šä¿ç•™æŒ‡é’ˆ
 void spritesheet_add_ani(struct spritesheet *this,int id,uint16_t *framindexs,int n,bool loop) {
 	if (n<=0) {
 		debug("n:%d must gt 0",n);

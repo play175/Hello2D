@@ -50,7 +50,7 @@ void widget_sprite_update() {
 	if(wgspr->reset) {
 		wgspr->reset = false;
 
-		//±ê¼ÇÕû¸öÇøÓòÐèÒªÖØ»æ
+		//æ ‡è®°æ•´ä¸ªåŒºåŸŸéœ€è¦é‡ç»˜
 		this->mask |= NMSK_BOUNDS;
 	}
 
@@ -59,7 +59,7 @@ void widget_sprite_update() {
 		rect *current = spritesheet_get_rect(wgspr->sheet);
 		if(wgspr->current != current) {
 			wgspr->current = current;
-			//±ê¼ÇÕû¸öÇøÓòÐèÒªÖØ»æ
+			//æ ‡è®°æ•´ä¸ªåŒºåŸŸéœ€è¦é‡ç»˜
 			this->mask |= NMSK_BOUNDS;
 		}
 	}

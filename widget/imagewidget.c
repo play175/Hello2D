@@ -49,7 +49,7 @@ void widget_image_update() {
 	if(wgimg->reset) {
 		wgimg->reset = false;
 
-		//±ê¼ÇÕû¸öÇøÓòÐèÒªÖØ»æ
+		//æ ‡è®°æ•´ä¸ªåŒºåŸŸéœ€è¦é‡ç»˜
 		this->mask |= NMSK_BOUNDS;
 	}
 

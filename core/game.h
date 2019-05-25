@@ -26,14 +26,14 @@ struct game {
 	void *bits;
 	int w,h;
 	bool running;
-	bool singleton;//ÊÇ·ñÖ»ÔÊĞíÔËĞĞÒ»¸öÊµÀı
-	bool alpha;//ÊÇ·ñÍ¸Ã÷´°¿Ú
-	bool noborder;//ÊÇ·ñÎŞ´°¿Ú±ß¿ò
-	bool mousedown;//Êó±êÊÇ·ñ°´ÏÂ
-	uint32_t now;//µ±Ç°ºÁÃëÊı£¨Æô¶¯ºó£©
-	float delta;//updateÊµ¼Ê¼ä¸ô£ºÃë
-	float fixeddelta;//update¹Ì¶¨¼ä¸ô£ºÃë
-	uint32_t frame;//×ÜÖ¡Êı
+	bool singleton;//æ˜¯å¦åªå…è®¸è¿è¡Œä¸€ä¸ªå®ä¾‹
+	bool alpha;//æ˜¯å¦é€æ˜çª—å£
+	bool noborder;//æ˜¯å¦æ— çª—å£è¾¹æ¡†
+	bool mousedown;//é¼ æ ‡æ˜¯å¦æŒ‰ä¸‹
+	uint32_t now;//å½“å‰æ¯«ç§’æ•°ï¼ˆå¯åŠ¨åï¼‰
+	float delta;//updateå®é™…é—´éš”ï¼šç§’
+	float fixeddelta;//updateå›ºå®šé—´éš”ï¼šç§’
+	uint32_t frame;//æ€»å¸§æ•°
 	uint32_t bgcolor;
 	int mousex,mousey;
 };
@@ -87,7 +87,7 @@ static inline void game_draw(void *bits,int bits_width,int bits_height \
 
 static inline void game_fill(uint32_t color) {
 	int count = G->h * G->w;
-	memset32(G->bits,color,count);//¶ÁÈ¡colorµÄÍ¸Ã÷¶È
+	memset32(G->bits,color,count);//è¯»å–colorçš„é€æ˜åº¦
 }
 
 static inline void game_fillcolor(uint32_t color) {
@@ -100,7 +100,7 @@ static inline void game_fillrect(void *dest, int pitch, int width, int height, u
 	while(height--) {
 		asm volatile(
 			"cld;"
-			"rep stosl;"//´Óeax±£´æËÄ×Ö½Úµ½edi,Ö±µ½ecxÎª0
+			"rep stosl;"//ä»eaxä¿å­˜å››å­—èŠ‚åˆ°edi,ç›´åˆ°ecxä¸º0
 			:
 			:"m"(dest), "m"(dest), "D"(dest), "a"(data), "c"(width)
 		);
@@ -134,10 +134,10 @@ static inline void game_blend(uint8_t blendmode,int dx,int dy,uint32_t *dest,int
 
 #ifdef _GAME_FPS
 
-// 64¡Á8µÄÊı×Ö·ûºÅÍ¼Ïñ
-// ¡¤Ã¿¸öÊı×ÖµÄ³ß´çÎª6¡Á8
-// ¡¤ÏñËØ´æ´¢Ë³ĞòÎª×ÔÉÏ¶øÏÂ
-// ¡¤´øalphaÍ¨µÀ
+// 64Ã—8çš„æ•°å­—ç¬¦å·å›¾åƒ
+// Â·æ¯ä¸ªæ•°å­—çš„å°ºå¯¸ä¸º6Ã—8
+// Â·åƒç´ å­˜å‚¨é¡ºåºä¸ºè‡ªä¸Šè€Œä¸‹
+// Â·å¸¦alphaé€šé“
 static uint32_t _bmp_num[64*8] = {
 	0x00ffffff, 0xFFffffff, 0xFFffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0xFFffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0xFFffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0xFFffffff, 0xFFffffff, 0xFFffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0xFFffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0xFFffffff, 0xFFffffff, 0xFFffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0xFFffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0xFFffffff, 0xFFffffff, 0x00ffffff, 0x00FFFFFF, 0x00FFFFFF, 0x00FFFFFF, 0x00FFFFFF, 0x00FFFFFF,
 	0xFFffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0x00ffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0x00ffffff, 0xFFffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff, 0xFFffffff, 0x00FFFFFF, 0x00FFFFFF, 0x00FFFFFF, 0x00FFFFFF, 0x00FFFFFF,

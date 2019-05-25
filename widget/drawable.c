@@ -31,7 +31,7 @@ struct drawable *drawable_from(char *path) {
 	uint32_t ind;
 	uint8_t tmp;
 	if(data != NULL) {
-		//0xAARRGGBB±ä³É0xAABBGGRR
+		//0xAARRGGBBå˜æˆ0xAABBGGRR
 		src = (uint8_t *)(data);
 		for(y = 0;y < h;++y){
 			for(x = 0;x < w;++x){
@@ -134,7 +134,7 @@ struct drawable *drawable_from(char *path) {
 			this->padding.bottom = 0;
 		}
 
-		//È¥µô±ßÔµ1¸öÏñËØ
+		//å»æ‰è¾¹ç¼˜1ä¸ªåƒç´ 
 		edge_offset(&this->border,-1);
 		edge_offset(&this->padding,-1);
 		this->w-=2;

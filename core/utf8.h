@@ -8,7 +8,7 @@
 #ifndef __UTF8_H
 #define __UTF8_H
 
-//utf8�ַ�����1-6�����Ը���ÿ���ַ���һ���ֽ��ж������ַ�����
+//utf8字符长度1-6，可以根据每个字符第一个字节判断整个字符长度
 //0xxxxxxx
 //110xxxxx 10xxxxxx
 //1110xxxx 10xxxxxx 10xxxxxx
@@ -16,7 +16,7 @@
 //111110xx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
 //1111110x 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx 10xxxxxx
 //
-//������ұ�������256�����е���ֵ��ʾ�Դ�Ϊ��ʼ�ֽڵ�utf8�ַ�����
+//定义查找表，长度256，表中的数值表示以此为起始字节的utf8字符长度
 static unsigned char utf8_look_for_table[] = {
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -45,7 +45,7 @@ static unsigned char utf8_look_for_table[] = {
     index++, chrptr += UTFLEN((unsigned char)*chrptr),chrlen = (index < strsize)?UTFLEN((unsigned char)*chrptr) : 0 )
 
 
-//����str�ַ���Ŀ
+//计算str字符数目
 static inline int utf8_strlen(char *str,int strlen) {
 	int len = 0;
 	char *ptr;
@@ -64,7 +64,7 @@ static inline int utf8_crlflen(char *str,int strlen) {
 	return len;
 }
 
-//get�Ӵ�
+//get子串
 static inline char *utf8_substr(char *str, unsigned int start, unsigned int end) {
 	int len = utf8_strlen(str,strlen(str));
 

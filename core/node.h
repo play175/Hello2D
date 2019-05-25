@@ -56,11 +56,11 @@ struct node {
 	struct mat mat;
 	struct mat worldmat;
 
-	bool disable;//Òþ²Ø
+	bool disable;//éšè—
 	vec pos;
 	vec scale;
-	rect bounds;//×¢Òâ£ºx,y ÔÚ0 - 1 ·¶Î§ÄÚ
-	rect tarbounds;//×¢Òâ£ºx,y ÔÚ0 - 1 ·¶Î§ÄÚ
+	rect bounds;//æ³¨æ„ï¼šx,y åœ¨0 - 1 èŒƒå›´å†…
+	rect tarbounds;//æ³¨æ„ï¼šx,y åœ¨0 - 1 èŒƒå›´å†…
 	float rot;
 
 	uint8_t mask;
@@ -108,7 +108,7 @@ void widget_destroy(struct widget *widget);
 void widgettag_init(struct widgettag *tag,int tagid);
 void widgettag_install(struct widgettag *tag);
 
-//ÉèÖÃ±¾µØ°üÎ§ºÐ,ËùÓÐ»æÖÆ¶¼±ØÐëÔÚ´ËÇøÓòÄÚ
+//è®¾ç½®æœ¬åœ°åŒ…å›´ç›’,æ‰€æœ‰ç»˜åˆ¶éƒ½å¿…é¡»åœ¨æ­¤åŒºåŸŸå†…
 static inline void node_bounds(struct node *this,rect *bounds) {
 	if(this->bounds.x != bounds->x || this->bounds.y != bounds->y
 		|| this->bounds.w != bounds->w || this->bounds.h != bounds->h) {
@@ -122,7 +122,7 @@ static inline void node_bounds(struct node *this,rect *bounds) {
 
 static inline void node_size(struct node *this, float w, float h) {
 	rect *b = &this->bounds;
-	if(this->mask & NMSK_BOUNDS) { //Ö®Ç°ÒÑ¾­¸Ä±ä£¬µ«»¹Ã»ÓÐÖ´ÐÐ
+	if(this->mask & NMSK_BOUNDS) { //ä¹‹å‰å·²ç»æ”¹å˜ï¼Œä½†è¿˜æ²¡æœ‰æ‰§è¡Œ
 		b = &this->tarbounds;
 	}
 	if(b->w != w || b->h != h) {
@@ -133,7 +133,7 @@ static inline void node_size(struct node *this, float w, float h) {
 
 static inline void node_pivot(struct node *this, float x, float y) {
 	rect *b = &this->bounds;
-	if(this->mask & NMSK_BOUNDS) { //Ö®Ç°ÒÑ¾­¸Ä±ä£¬µ«»¹Ã»ÓÐÖ´ÐÐ
+	if(this->mask & NMSK_BOUNDS) { //ä¹‹å‰å·²ç»æ”¹å˜ï¼Œä½†è¿˜æ²¡æœ‰æ‰§è¡Œ
 		b = &this->tarbounds;
 	}
 	if(b->x != x || b->y != y) {
@@ -198,7 +198,7 @@ static inline void node_scaley(struct node *this, float y) {
 
 static inline void node_updatelocalmat(struct node *this) {
 	//update local matrix
-	//×¢Òâ:Ëõ·Å¡¢Ðý×ª¡¢Æ½ÒÆ Ë³Ðò²»ÄÜÂÒ
+	//æ³¨æ„:ç¼©æ”¾ã€æ—‹è½¬ã€å¹³ç§» é¡ºåºä¸èƒ½ä¹±
 	mat_identity(&this->mat);
 	mat_translate(&this->mat, -this->bounds.x * this->bounds.w, -this->bounds.y * this->bounds.h);
 	mat_scale(&this->mat, this->scale.x, this->scale.y);

@@ -130,7 +130,7 @@ void widget_drawable_update() {
 	if(wg->reset) {
 		wg->reset = false;
 
-		//±ê¼ÇÕû¸öÇøÓòÐèÒªÖØ»æ
+		//æ ‡è®°æ•´ä¸ªåŒºåŸŸéœ€è¦é‡ç»˜
 		this->mask |= NMSK_BOUNDS;
 	}
 

@@ -26,7 +26,7 @@ void widget_test_start() {
 	struct node *this = _current_node;
 
 	if (this->id == 2 || this->id == 3) {
-		//Ôö¼ÓÒ»¸öimage×é¼ş
+		//å¢åŠ ä¸€ä¸ªimageç»„ä»¶
 		struct widget_image *wgimg = imagewidget_addto(this);
 		if (this->id == 2) {
 			wgimg->tex = texture_from("res/close.png");
@@ -63,7 +63,7 @@ void widget_test_update() {
 	struct node *this = _current_node;
 
 	if (this->id==2 || this->id==3) {
-		//ĞŞ¸ÄÁãµãÎªÖĞĞÄµã(ÁãµãÄ¬ÈÏÔÚ×óÉÏ½Ç)
+		//ä¿®æ”¹é›¶ç‚¹ä¸ºä¸­å¿ƒç‚¹(é›¶ç‚¹é»˜è®¤åœ¨å·¦ä¸Šè§’)
 		node_pivot(this, 0.5f, 0.5f);
 	}
 
@@ -123,7 +123,7 @@ struct widget_test *testwidget_addto(struct node *this) {
 
 bool game_create(int argc, char **argv) {
 	widget_installall();
-	widgettag_install(&_tag_test);//test×é¼ş³õÊ¼»¯
+	widgettag_install(&_tag_test);//testç»„ä»¶åˆå§‹åŒ–
 
 	_root = node_new();
 
@@ -133,7 +133,7 @@ bool game_create(int argc, char **argv) {
 		node_pos(node1,rand() % 320,rand() % 100);
 		node_addchild(_root,node1);
 
-		//²âÊÔ£¬ÔöÉ¾¸Ä½Úµã
+		//æµ‹è¯•ï¼Œå¢åˆ æ”¹èŠ‚ç‚¹
 		//struct node *node2 = node_new();
 		//struct node *node3 = node_new();
 
@@ -142,11 +142,11 @@ bool game_create(int argc, char **argv) {
 		//node_removechild_at(_root,0);
 		//node_addchild_at(_root,node3,0);
 
-		//ĞèÒªÊ²Ã´¹¦ÄÜ¾Í¼ÓÊ²Ã´×é¼ş
+		//éœ€è¦ä»€ä¹ˆåŠŸèƒ½å°±åŠ ä»€ä¹ˆç»„ä»¶
 		struct widget_test *wgtest = testwidget_addto(node1);
 	}
 
-	//±éÀú×Ó½Úµã
+	//éå†å­èŠ‚ç‚¹
 	/*struct node *i;
 	node_foreach (i, _root) {
 		printf("id:%d\n",i->id);
@@ -202,7 +202,7 @@ void game_dropfile(char *file,int index,int total) {
 
 void game_keydown(int key, bool ctrl, bool alt, bool shift,short repeat) {
 	//debug("game_keydown:%d,%d,%d,%d,%d",key,ctrl,alt,shift,repeat);
-	//°´ÏÂÈÎÒâ¼üÏÔÊ¾ÖØ»æÇøÓò
+	//æŒ‰ä¸‹ä»»æ„é”®æ˜¾ç¤ºé‡ç»˜åŒºåŸŸ
 	node_redraw(true);
 }
 

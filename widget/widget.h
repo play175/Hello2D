@@ -32,9 +32,9 @@ enum wgtag {
 #include "drawablewidget.h"
 
 static inline void widget_installall() {
-	imagewidget_install();//image×é¼ş³õÊ¼»¯
-	spritewidget_install();//sprite×é¼ş³õÊ¼»¯
-	drawablewidget_install();//drawable×é¼ş³õÊ¼»¯
+	imagewidget_install();//imageç»„ä»¶åˆå§‹åŒ–
+	spritewidget_install();//spriteç»„ä»¶åˆå§‹åŒ–
+	drawablewidget_install();//drawableç»„ä»¶åˆå§‹åŒ–
 }
 
 #endif

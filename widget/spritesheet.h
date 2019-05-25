@@ -16,7 +16,7 @@
 
 struct sheet_anim {
 	bool loop;
-	kvec_t(uint16_t) frameidxs;//Ö¡ÐòºÅÊý×é
+	kvec_t(uint16_t) frameidxs;//å¸§åºå·æ•°ç»„
 };
 
 KHASH_MAP_INIT_INT(animap, struct sheet_anim)
@@ -25,11 +25,11 @@ struct spritesheet {
 	int otime;
 	int interp;
 	int fps;//1000/fps
-	int frame;//µ±Ç°Ö¡ÐòºÅ
-	int frameidx;//ÔÚactiveÖÐµÄµ±Ç°Ë÷Òý
-	kvec_t(struct rect) frames;//¶¯»­×ÜÖ¡ÐòÁÐ
-	struct sheet_anim *active;//µ±Ç°¶¯»­
-	khash_t(animap) *animap;//¶¯»­±í£¬keyÊÇ¶¯»­ID
+	int frame;//å½“å‰å¸§åºå·
+	int frameidx;//åœ¨activeä¸­çš„å½“å‰ç´¢å¼•
+	kvec_t(struct rect) frames;//åŠ¨ç”»æ€»å¸§åºåˆ—
+	struct sheet_anim *active;//å½“å‰åŠ¨ç”»
+	khash_t(animap) *animap;//åŠ¨ç”»è¡¨ï¼Œkeyæ˜¯åŠ¨ç”»ID
 };
 
 void spritesheet_clone(struct spritesheet *this,struct spritesheet *to);
@@ -54,7 +54,7 @@ inline float spritesheet_get_height(struct spritesheet *this) {
 	return kv_size(this->frames) == 0 ? 0 : kv_A(this->frames,this->frame).h;
 }
 
-//rect »á¸´ÖÆ£¬´Ë´¦²»»á±£ÁôÖ¸Õë
+//rect ä¼šå¤åˆ¶ï¼Œæ­¤å¤„ä¸ä¼šä¿ç•™æŒ‡é’ˆ
 inline void spritesheet_add_frame(struct spritesheet *this,struct rect *rect) {
 	kv_push(struct rect,this->frames,*rect);
 }

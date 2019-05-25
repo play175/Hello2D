@@ -6,7 +6,7 @@
 # MIT Licensed
 #
 
-APP = h2d
+APP = h2d.exe
 OBJS = $(patsubst %.c,%.o,$(wildcard *.c)) 
 OBJS += $(patsubst 3rdparty/%.c,3rdparty/%.o,$(wildcard 3rdparty/*.c)) 
 OBJS += $(patsubst core/%.c,core/%.o,$(wildcard core/*.c)) 
@@ -27,16 +27,16 @@ RC = windres
 release : WARNS = -Wno-unknown-pragmas -Wl,--subsystem,windows
 release : CFLAGS += -D NDEBUG
 release : LDFLAGS += -O4 -s
-release : ${APP}.exe
-	strip $<
-	upx $<
+release : clean ${APP}
+	strip ${APP}
+	upx ${APP}
 
 debug : WARNS = -Wall -Wl,--subsystem,console
 debug : CFLAGS +=  -g
 debug : LDFLAGS +=  -g
-debug : ${APP}.exe
+debug : ${APP}
 
-${APP}.exe : ${OBJS}
+${APP} : ${OBJS}
 	${CC} -o $@ ${OBJS} ${LDFLAGS}
 
 clean :

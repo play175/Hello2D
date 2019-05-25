@@ -87,7 +87,7 @@ void node_resizecanvas() {
 struct node *node_getchild_at(struct node *this,int index) {
 	if (this->numchildren == 0) return NULL;
 	if (index < 0) {
-		//-1ÊÇ×îºóÒ»¸ö
+		//-1æ˜¯æœ€åä¸€ä¸ª
 		index = this->numchildren + index;
 	}
 	if (index < 0) return NULL;
@@ -118,7 +118,7 @@ void node_addchild_at(struct node *this,struct node *child,int index) {
 		child->prev = child->next = child;
 	} else {
 		if (index < 0) {
-			//-1ÊÇ×îºóÒ»¸ö
+			//-1æ˜¯æœ€åä¸€ä¸ª
 			index = this->numchildren + index + 1;
 		}
 		if (index < 0) index = 0;
@@ -188,7 +188,7 @@ void node_render(struct node *this,struct drawcontext *context) {
 	}
 }
 
-//ËùÓĞÎïÌå°´Ôà¾ØĞÎÇøÓòÎª»­²¼äÖÈ¾
+//æ‰€æœ‰ç‰©ä½“æŒ‰è„çŸ©å½¢åŒºåŸŸä¸ºç”»å¸ƒæ¸²æŸ“
 void node_render_rect(int left, int top, int right, int bottom) {
 	if(left < 0)left = 0;if(top < 0)top = 0;
 	if(right > G->w) right = G->w;
@@ -223,7 +223,7 @@ void node_render_rect(int left, int top, int right, int bottom) {
 	}
 }
 
-//°ÑÎïÌåµ±Ç°ÇøÓò±ê¼ÇÎªÔà
+//æŠŠç‰©ä½“å½“å‰åŒºåŸŸæ ‡è®°ä¸ºè„
 void node_markdirty(struct node *this) {
 	int left,top,right,bottom;
 	mat_transform_size(&this->worldmat,this->bounds.w, this->bounds.h, &left,&top, &right,&bottom); 
@@ -242,7 +242,7 @@ void node_markdirty(struct node *this) {
 	//printf("%d,%d,%d,%d\n",(int)left,(int)top,(int)right,(int)bottom);
 }
 
-//¼ì²âÎïÌåÔàÁËµÄÇøÓò
+//æ£€æµ‹ç‰©ä½“è„äº†çš„åŒºåŸŸ
 void node_checkdirty(struct node *this, bool parent_mat_changed) {
 	bool my_mat_changed = false;
 	bool dirty = false;
@@ -267,7 +267,7 @@ void node_checkdirty(struct node *this, bool parent_mat_changed) {
 	}
 
 	if(parent_mat_changed || my_mat_changed || olddirty) {
-		node_markdirty(this);//Ô­À´µÄÎ»ÖÃ
+		node_markdirty(this);//åŸæ¥çš„ä½ç½®
 	}
 
 	if(this->mask & NMSK_BOUNDS) {
@@ -295,7 +295,7 @@ void node_checkdirty(struct node *this, bool parent_mat_changed) {
 
 	if(dirty) {
 		//printf("%d\n",this->id);
-		node_markdirty(this);//ĞÂÎ»ÖÃ
+		node_markdirty(this);//æ–°ä½ç½®
 	}
 
 	struct node *i;
@@ -351,7 +351,7 @@ bool node_hittest(struct node *this,float stage_x,float stage_y,float *local_x,f
 	}
 
 	/*if(this == _root) {
-		//Èç¹ûÊÇ_root,ÔòÒ»¶¨³ÉÁ¢
+		//å¦‚æœæ˜¯_root,åˆ™ä¸€å®šæˆç«‹
 		*out = this;
 		*local_x = lx;
 		*local_y = ly;

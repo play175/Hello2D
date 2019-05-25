@@ -24,7 +24,7 @@ struct texture *texture_from(char *path) {
 	uint8_t *data = stbi_load(path, &w, &h, &n, 4);
 
 	if(data != NULL) {
-		//0xAARRGGBB±ä³É0xAABBGGRR
+		//0xAARRGGBBå˜æˆ0xAABBGGRR
 		int x,y;
 		uint8_t *src = (uint8_t *)(data);
 		uint32_t ind;
